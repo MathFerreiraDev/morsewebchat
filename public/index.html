@@ -56,6 +56,7 @@
         const msgInput = document.getElementById('mensagem');
         const chatBox = document.getElementById('chat-box');
 
+         // TRADUÇÃO PARA MORSE  
         const dicionarioMorse = {
             'A': '.-',    'B': '-...',  'C': '-.-.',  'D': '-..',
             'E': '.',     'F': '..-.',  'G': '--.',   'H': '....',
@@ -68,8 +69,6 @@
             '7': '--...', '8': '---..', '9': '----.', '0': '-----',
             ' ': '/' 
         };
-
-
         function converterParaMorse(texto) {
                 
             let textoM = texto.toUpperCase(); 
@@ -85,7 +84,9 @@
             }
 
             return resultadoFinal.trim();
-            }
+        }
+        msgInput = converterParaMorse(msgInput);
+
 
 
         // Escuta o evento de envio do formulário
@@ -96,8 +97,8 @@
             const msg = msgInput.value.trim();
 
 
-            // TRADUÇÃO PARA MORSE        
-            msg = converterParaMorse(msg);
+                 
+           
 
             if (nick && msg) {
                 
@@ -121,7 +122,7 @@
             
            
         });
-        
+
     </script>
 </body>
 </html>
