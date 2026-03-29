@@ -56,7 +56,7 @@
         const msgInput = document.getElementById('mensagem');
         const chatBox = document.getElementById('chat-box');
 
-         // TRADUÇÃO PARA MORSE  
+        // TRADUÇÃO PARA MORSE  
         const dicionarioMorse = {
             'A': '.-',    'B': '-...',  'C': '-.-.',  'D': '-..',
             'E': '.',     'F': '..-.',  'G': '--.',   'H': '....',
@@ -69,8 +69,8 @@
             '7': '--...', '8': '---..', '9': '----.', '0': '-----',
             ' ': '/' 
         };
+
         function converterParaMorse(texto) {
-                
             let textoM = texto.toUpperCase(); 
             let resultadoFinal = ""; 
 
@@ -79,50 +79,44 @@
                 let codigoDaLetra = dicionarioMorse[letraAtual]; 
 
                 if (codigoDaLetra !== undefined) {
-                resultadoFinal += codigoDaLetra + " "; 
+                    resultadoFinal += codigoDaLetra + " "; 
+                } else if (letraAtual === ' ') {
+                    // Garante que o espaço entre palavras vire a barra (/)
+                    resultadoFinal += "/ "; 
                 }
             }
 
             return resultadoFinal.trim();
         }
-        msgInput = converterParaMorse(msgInput.value);
 
-
-
-        // Escuta o evento de envio do formulário
+     
         chatForm.addEventListener('submit', (e) => {
             e.preventDefault(); 
             
             const nick = nickInput.value.trim();
-            const msg = msgInput.value.trim();
+            const msgTextoOriginal = msgInput.value.trim(); 
 
-
-                 
-           
-
-            if (nick && msg) {
+            if (nick && msgTextoOriginal) {
+               
+                const msgEmMorse = converterParaMorse(msgTextoOriginal);
                 
-                socket.emit('mensagem', { nick, msg });
+               
+                socket.emit('mensagem', { nick: nick, msg: msgEmMorse });
                 
-                
+               
                 msgInput.value = '';
                 msgInput.focus();
             }
         });
 
-        
+        // Recebe a mensagem do servidor
         socket.on('mensagem', (dados) => {
-            
             const div = document.createElement('div');
             div.className = "bg-white p-3 rounded-lg shadow-sm border border-gray-100 w-full self-start";
             div.innerHTML = `<span class="font-bold text-blue-600">${dados.nick}:</span> <span class="text-gray-800">${dados.msg}</span>`;
             
-            // Adiciona a mensagem ao chat
             chatBox.appendChild(div);
-            
-           
         });
-
     </script>
 </body>
 </html>
