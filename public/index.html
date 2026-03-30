@@ -79,7 +79,13 @@
         const chatBox = document.getElementById('chat-box');
         const gifAnimacao = document.getElementById('gif-animacao');
 
-      
+        var random_color;
+        while (parseInt(random_color, 16) > 0xCCCCCC) {
+            random_color = Math.floor(Math.random()*16777215).toString(16);
+        } 
+        
+        
+        document.documentElement.style.setProperty('--user-color', `#${random_color}`);
        
 
         // TRADUÇÃO PARA MORSE  
@@ -160,6 +166,7 @@
             
             const nick = nickInput.value.trim();
             const msgTextoOriginal = msgInput.value.trim(); 
+            const user_color = `#${random_color}`;
 
             if (nick && msgTextoOriginal) {
                
@@ -169,8 +176,8 @@
                 tocarAnimação(msgEmMorse);
                
                 // Envia pro servidor
-                socket.emit('mensagem', { nick: nick, msg: msgEmMorse });
-                
+                socket.emit('mensagem', { nick: nick, msg: msgEmMorse, color: user_color });
+
                 msgInput.value = '';
                 msgInput.focus();
             }
@@ -181,7 +188,7 @@
         socket.on('mensagem', (dados) => {
             const div = document.createElement('div');
             div.className = "bg-white p-3 rounded-lg shadow-sm border border-gray-100 w-full self-start";
-            div.innerHTML = `<span class="font-bold text-blue-600">${dados.nick}:</span> <span class="text-gray-800">${dados.msg}</span>`;
+            div.innerHTML = `<span class="font-bold" style="color: ${dados.color}">${dados.nick}:</span> <span class="text-gray-800">${dados.msg}</span>`;
             
             chatBox.appendChild(div);
         });
