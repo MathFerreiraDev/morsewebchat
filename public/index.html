@@ -79,13 +79,7 @@
         const chatBox = document.getElementById('chat-box');
         const gifAnimacao = document.getElementById('gif-animacao');
 
-        var random_color;
-        while (parseInt(random_color, 16) > 0xCCCCCC) {
-            random_color = Math.floor(Math.random()*16777215).toString(16);
-        } 
         
-        
-        document.documentElement.style.setProperty('--user-color', `#${random_color}`);
        
 
         // TRADUÇÃO PARA MORSE  
@@ -160,30 +154,37 @@
         }
 
         // --- ENVIO DO FORMULÁRIO ---
-     
+
+        let user_color;
+        
         chatForm.addEventListener('submit', (e) => {
             e.preventDefault(); 
             
             const nick = nickInput.value.trim();
             const msgTextoOriginal = msgInput.value.trim(); 
-            const user_color = `#${random_color}`;
 
             if (nick && msgTextoOriginal) {
+            // Gera cor apenas na primeira mensagem do usuário
+            if (!user_color) {
+                let random_color;
+                do {
+                random_color = Math.floor(Math.random()*16777215).toString(16);
+                } while (parseInt(random_color, 16) > 0xCCCCCC);
+                user_color = `#${random_color}`;
+            }
                
-                const msgEmMorse = converterParaMorse(msgTextoOriginal);
-                
-                // Dispara a animação e o som (ele roda sozinho sem travar o site)
-                tocarAnimação(msgEmMorse);
+            const msgEmMorse = converterParaMorse(msgTextoOriginal);
+            
+            tocarAnimação(msgEmMorse);
                
-                // Envia pro servidor
-                socket.emit('mensagem', { nick: nick, msg: msgEmMorse, color: user_color });
+            socket.emit('mensagem', { nick: nick, msg: msgEmMorse, color: user_color });
 
-                msgInput.value = '';
-                msgInput.focus();
+            msgInput.value = '';
+            msgInput.focus();
             }
         });
 
-       
+           
 
         socket.on('mensagem', (dados) => {
             const div = document.createElement('div');
