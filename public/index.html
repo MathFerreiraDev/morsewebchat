@@ -137,15 +137,15 @@
 
             for (let i = 0; i < codigo.length; i++) {
                 if (codigo[i] === '.') {
-                    await tocarBip(100); // Ponto (curto)
-                    await esperar(100);  // Pausa
+                    await tocarBip(200); // Ponto (curto)
+                    await esperar(1000);  // Pausa
                 } else if (codigo[i] === '-') {
-                    await tocarBip(300); // Traço (longo)
+                    await tocarBip(600); // Traço (longo)
                     await esperar(100);  // Pausa
                 } else if (codigo[i] === ' ') {
-                    await esperar(200);  // Pausa entre letras
+                    await esperar(1000);  // Pausa entre letras
                 } else if (codigo[i] === '/') {
-                    await esperar(400);  // Pausa entre palavras
+                    await esperar(500);  // Pausa entre palavras
                 }
             }
 
