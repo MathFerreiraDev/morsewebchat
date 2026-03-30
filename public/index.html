@@ -105,9 +105,9 @@
                 let codigoDaLetra = dicionarioMorse[letraAtual]; 
 
                 if (codigoDaLetra !== undefined) {
-                    resultadoFinal += codigoDaLetra + " "; 
+                    resultadoFinal += codigoDaLetra; 
                 } else if (letraAtual === ' ') {
-                    resultadoFinal += "/ "; 
+                    resultadoFinal += "/"; 
                 }
             }
             return resultadoFinal.trim();
@@ -141,12 +141,10 @@
             for (let i = 0; i < codigo.length; i++) {
                 if (codigo[i] === '.') {
                     await tocarBip(200); // Ponto (curto)
-                    await esperar(1000);  // Pausa
+                    await esperar(800);  // Pausa
                 } else if (codigo[i] === '-') {
                     await tocarBip(600); // Traço (longo)
-                    await esperar(1000);  // Pausa
-                } else if (codigo[i] === ' ') {
-                    await esperar(1000);  // Pausa entre letras
+                    await esperar(400);  // Pausa
                 } else if (codigo[i] === '/') {
                     await esperar(500);  // Pausa entre palavras
                 }
