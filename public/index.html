@@ -168,8 +168,10 @@
             if (!user_color) {
                 let random_color;
                 do {
-                random_color = Math.floor(Math.random()*16777215).toString(16);
+                    // Adicionando o .padStart(6, '0') aqui:
+                    random_color = Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
                 } while (parseInt(random_color, 16) > 0xCCCCCC);
+                
                 user_color = `#${random_color}`;
             }
                
