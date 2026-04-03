@@ -192,6 +192,7 @@
             div.innerHTML = `<span class="font-bold" style="color: ${dados.color}">${dados.nick}:</span> <span class="text-gray-800">${dados.msg}</span>`;
             
             chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
         });
     </script>
 </body>
