@@ -166,13 +166,8 @@
             if (nick && msgTextoOriginal) {
             // Gera cor apenas na primeira mensagem do usuário
             if (!user_color) {
-                let random_color;
-                do {
-                    // Adicionando o .padStart(6, '0') aqui:
-                    random_color = Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
-                } while (parseInt(random_color, 16) > 0xCCCCCC);
-                
-                user_color = `#${random_color}`;
+                const hue = Math.floor(Math.random() * 360);
+                user_color = `hsl(${hue}, 70%, 40%)`;
             }
                
             const msgEmMorse = converterParaMorse(msgTextoOriginal);
